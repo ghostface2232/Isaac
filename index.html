@@ -417,7 +417,37 @@
         <div class="datetime-picker">
           <div class="date-select">
             <label class="input-label">Date</label>
-            <input type="date" id="bookingDate" class="datetime-input">
+            <div class="custom-date-picker" id="datePicker">
+              <div class="custom-select-trigger" onclick="toggleDatePicker()">
+                <span class="custom-select-value" id="datePickerValue">Select Date</span>
+                <svg class="custom-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </div>
+              <div class="date-picker-dropdown" id="datePickerDropdown">
+                <div class="date-picker-header">
+                  <button type="button" class="date-nav-btn" onclick="changeMonth(-1)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                  </button>
+                  <span class="date-picker-month" id="currentMonth"></span>
+                  <button type="button" class="date-nav-btn" onclick="changeMonth(1)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </button>
+                </div>
+                <div class="date-picker-weekdays">
+                  <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                </div>
+                <div class="date-picker-days" id="datePickerDays"></div>
+              </div>
+            </div>
+            <input type="hidden" id="bookingDate" value="">
           </div>
           <div class="time-select">
             <label class="input-label">Time</label>
@@ -587,6 +617,12 @@
       document.getElementById('durationSelectValue').textContent = 'Duration';
       document.getElementById('durationSelectValue').classList.remove('selected');
       document.querySelectorAll('.custom-select-option').forEach(opt => opt.classList.remove('selected'));
+
+      // Reset date picker
+      selectedDate = null;
+      currentDate = new Date();
+      document.getElementById('datePickerValue').textContent = 'Select Date';
+      document.getElementById('datePickerValue').classList.remove('selected');
     }
 
     function selectPurpose(el) {
@@ -688,16 +724,96 @@
       if (e.key === 'Escape') closeBooking();
     });
 
+    // Custom Date Picker
+    let currentDate = new Date();
+    let selectedDate = null;
+
+    function toggleDatePicker() {
+      const picker = document.getElementById('datePicker');
+      const wasOpen = picker.classList.contains('open');
+
+      // Close all dropdowns first
+      document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('open'));
+      document.querySelectorAll('.custom-date-picker').forEach(s => s.classList.remove('open'));
+
+      if (!wasOpen) {
+        picker.classList.add('open');
+        renderCalendar();
+      }
+    }
+
+    function changeMonth(direction) {
+      currentDate.setMonth(currentDate.getMonth() + direction);
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+
+      document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      let html = '';
+
+      // Empty cells for days before first day of month
+      for (let i = 0; i < firstDay; i++) {
+        html += '<span class="date-day empty"></span>';
+      }
+
+      // Days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateObj = new Date(year, month, day);
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const isPast = dateObj < today;
+        const isSelected = selectedDate === dateStr;
+        const isToday = dateObj.getTime() === today.getTime();
+
+        let classes = 'date-day';
+        if (isPast) classes += ' disabled';
+        if (isSelected) classes += ' selected';
+        if (isToday) classes += ' today';
+
+        if (isPast) {
+          html += `<span class="${classes}">${day}</span>`;
+        } else {
+          html += `<span class="${classes}" onclick="selectDate('${dateStr}', ${day})">${day}</span>`;
+        }
+      }
+
+      document.getElementById('datePickerDays').innerHTML = html;
+    }
+
+    function selectDate(dateStr, day) {
+      selectedDate = dateStr;
+      document.getElementById('bookingDate').value = dateStr;
+
+      const dateObj = new Date(dateStr);
+      const options = { weekday: 'short', month: 'short', day: 'numeric' };
+      const displayText = dateObj.toLocaleDateString('en-US', options);
+
+      document.getElementById('datePickerValue').textContent = displayText;
+      document.getElementById('datePickerValue').classList.add('selected');
+      document.getElementById('datePicker').classList.remove('open');
+    }
+
     // Set minimum date to today
     document.addEventListener('DOMContentLoaded', function() {
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('bookingDate').setAttribute('min', today);
-
       // Generate time options (10-minute intervals)
       generateTimeOptions();
 
       // Generate duration options (30-minute intervals)
       generateDurationOptions();
+
+      // Initialize calendar to current month
+      currentDate = new Date();
     });
 
     // Custom Select Functions
@@ -759,6 +875,7 @@
 
       // Close all dropdowns first
       document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('open'));
+      document.querySelectorAll('.custom-date-picker').forEach(s => s.classList.remove('open'));
 
       // Toggle the clicked one
       if (!wasOpen) {
@@ -794,6 +911,9 @@
     document.addEventListener('click', function(e) {
       if (!e.target.closest('.custom-select')) {
         document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('open'));
+      }
+      if (!e.target.closest('.custom-date-picker')) {
+        document.querySelectorAll('.custom-date-picker').forEach(s => s.classList.remove('open'));
       }
     });
   </script>
