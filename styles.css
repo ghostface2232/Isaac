@@ -308,7 +308,7 @@ body {
   color: var(--accent-color);
   display: inline-block;
   margin-bottom: 16px;
-  margin-left: -8px;
+  margin-left: -4px;
   padding: 8px 16px;
   background: rgba(225, 255, 75, 0.08);
   border: 1px solid rgba(225, 255, 75, 0.2);
@@ -318,7 +318,7 @@ body {
 @media (min-width: 768px) {
   .section-label {
     font-size: 14px;
-    margin-left: -10px;
+    margin-left: -6px;
     padding: 10px 20px;
   }
 }
@@ -986,7 +986,7 @@ body {
 }
 
 .section-title {
-  font-size: 38px;
+  font-size: 36px;
 }
 
 @media (min-width: 480px) {
@@ -994,7 +994,7 @@ body {
     font-size: 54px;
   }
   .section-title {
-    font-size: 42px;
+    font-size: 40px;
   }
 }
 
