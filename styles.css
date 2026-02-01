@@ -107,6 +107,11 @@ body {
   height: 24px;
   width: auto;
   filter: brightness(0) saturate(100%) invert(95%) sepia(50%) saturate(1000%) hue-rotate(25deg) brightness(103%);
+  transition: filter 0.3s ease;
+}
+
+.logo:hover .logo-img {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(50%) saturate(1000%) hue-rotate(25deg) brightness(103%) drop-shadow(0 0 10px var(--accent-color));
 }
 
 @media (min-width: 768px) {
