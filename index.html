@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Isaac — Sharing Humanoid</title>
+  <meta name="description" content="Humanoid robots are likely to become part of our lives through a sharing-based service.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #050505;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      z-index: 100;
+      background: linear-gradient(to bottom, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.8) 50%, transparent 100%);
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+    }
+    
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    
+    .nav-link {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+      font-weight: 400;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+    }
+    
+    .nav-link:hover {
+      color: #fff;
+    }
+    
+    .cta-button {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 14px 32px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 32px;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(255,255,255,0.15);
+    }
+    
+    .cta-secondary {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .cta-secondary:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.4);
+    }
+    
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 80px 80px;
+      position: relative;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      text-align: center;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    .hero-subtitle {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 24px;
+    }
+    
+    .hero-title {
+      font-size: 72px;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      letter-spacing: -2px;
+    }
+    
+    .dynamic-text {
+      color: rgba(255,255,255,0.9);
+      display: inline-block;
+      min-width: 380px;
+    }
+    
+    .cursor {
+      animation: pulse 1s infinite;
+      color: rgba(255,255,255,0.6);
+      font-weight: 200;
+    }
+    
+    .hero-description {
+      font-size: 18px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+    
+    .scroll-indicator {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    
+    .scroll-text {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    }
+    
+    /* Section Common */
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-header {
+      margin-bottom: 64px;
+    }
+    
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      display: block;
+      margin-bottom: 24px;
+    }
+    
+    .section-title {
+      font-size: 48px;
+      font-weight: 300;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+    
+    /* About Section */
+    .about-section {
+      padding: 160px 80px;
+      background: #050505;
+    }
+    
+    .about-text {
+      font-size: 18px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 80px;
+      font-weight: 300;
+      max-width: 700px;
+    }
+    
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px 80px;
+      margin-bottom: 80px;
+    }
+    
+    .about-item {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px;
+    }
+    
+    .about-number {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      font-family: 'Space Mono', monospace;
+      display: block;
+      margin-bottom: 16px;
+    }
+    
+    .about-item-title {
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: -0.3px;
+      margin-bottom: 12px;
+    }
+    
+    .about-item-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+    }
+    
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    
+    .stat-box {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 36px;
+      font-family: 'Space Mono', monospace;
+      font-weight: 400;
+      display: block;
+      margin-bottom: 8px;
+    }
+    
+    .stat-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.5px;
+    }
+    
+    /* Services Section */
+    .services-section {
+      padding: 160px 80px;
+      background: linear-gradient(180deg, #050505 0%, #0a0a0a 50%, #050505 100%);
+    }
+    
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    .service-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 48px;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 16px;
+    }
+    
+    .service-card:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.12);
+      transform: translateY(-4px);
+    }
+    
+    .service-icon {
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 24px;
+    }
+    
+    .service-title {
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+    
+    .service-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      padding: 160px 80px;
+      background: #050505;
+      text-align: center;
+    }
+    
+    .cta-title {
+      font-size: 42px;
+      font-weight: 300;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    
+    .cta-text {
+      font-size: 18px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+    
+    /* Footer */
+    .footer {
+      padding: 64px 80px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+    }
+    
+    .footer-logo {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+    
+    .footer-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 8px;
+    }
+    
+    .footer-copyright {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+    
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 24px;
+    }
+    
+    .modal-overlay.active {
+      display: flex;
+    }
+    
+    .modal {
+      background: #0a0a0a;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+      padding: 48px;
+      position: relative;
+      animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      padding: 8px;
+      transition: color 0.3s ease;
+      border-radius: 8px;
+    }
+    
+    .modal-close:hover {
+      color: #fff;
+    }
+    
+    .modal-header {
+      margin-bottom: 32px;
+    }
+    
+    .modal-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      display: block;
+      margin-bottom: 16px;
+    }
+    
+    .modal-title {
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+    
+    .modal-subtext {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 8px;
+      font-weight: 300;
+    }
+    
+    /* Pricing */
+    .pricing-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+      background: rgba(255,255,255,0.03);
+      padding: 4px;
+      width: fit-content;
+      border-radius: 28px;
+    }
+    
+    .pricing-tab {
+      padding: 12px 28px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.4);
+      border-radius: 24px;
+    }
+    
+    .pricing-tab.active {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+    
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    
+    .pricing-content {
+      display: none;
+    }
+    
+    .pricing-content.active {
+      display: block;
+    }
+    
+    .pricing-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 40px;
+      transition: all 0.4s ease;
+      border-radius: 16px;
+      position: relative;
+    }
+    
+    .pricing-card:hover {
+      border-color: rgba(255,255,255,0.2);
+    }
+    
+    .pricing-card.featured {
+      background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+      border-color: rgba(255,255,255,0.15);
+    }
+    
+    .plan-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+    
+    .plan-name {
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      display: block;
+      margin-bottom: 16px;
+    }
+    
+    .plan-price {
+      margin-bottom: 24px;
+    }
+    
+    .price-amount {
+      font-size: 42px;
+      font-weight: 300;
+      letter-spacing: -1px;
+    }
+    
+    .price-period {
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+    }
+    
+    .plan-features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      line-height: 2.2;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .nav {
+        padding: 16px 24px;
+      }
+      .nav-links {
+        gap: 20px;
+      }
+      .nav-link {
+        display: none;
+      }
+      .hero {
+        padding: 100px 24px 60px;
+      }
+      .hero-title {
+        font-size: 42px;
+      }
+      .dynamic-text {
+        min-width: 200px;
+      }
+      .hero-description {
+        font-size: 16px;
+      }
+      .hero-cta {
+        flex-direction: column;
+        align-items: center;
+      }
+      .section-title {
+        font-size: 32px;
+      }
+      .about-section,
+      .services-section,
+      .cta-section {
+        padding: 80px 24px;
+      }
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      .modal {
+        padding: 32px 24px;
+      }
+      .modal-title {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="logo">Isaac</div>
+    <div class="nav-links">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#services" class="nav-link">Services</a>
+      <button class="nav-link" onclick="openPricing()">Pricing</button>
+      <button class="cta-button" onclick="openPricing()">Get Started</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-subtitle">Sharing Humanoid</p>
+      <h1 class="hero-title">
+        Isaac Can Be A<br>
+        <span class="dynamic-text" id="dynamicText"></span><span class="cursor">|</span>
+      </h1>
+      <p class="hero-description">
+        Humanoid robots are likely to become part of our lives<br>
+        through a sharing-based service.
+      </p>
+      <div class="hero-cta">
+        <button class="cta-button" onclick="openPricing()">Reserve Your Isaac</button>
+        <a href="#about" class="cta-button cta-secondary">Learn More</a>
+      </div>
+    </div>
+    <a href="#about" class="scroll-indicator">
+      <span class="scroll-text">Scroll to explore</span>
+      <div class="scroll-line"></div>
+    </a>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-label">01 — About</span>
+        <h2 class="section-title">
+          The future of robotics<br>is access, not ownership.
+        </h2>
+      </div>
+      
+      <p class="about-text">
+        Isaac represents a paradigm shift in how humanity interacts with 
+        humanoid technology. Through our on-demand sharing platform, 
+        advanced robotics becomes accessible to everyone—individuals, 
+        families, and businesses alike.
+      </p>
+      
+      <div class="about-grid">
+        <div class="about-item">
+          <span class="about-number">01</span>
+          <h3 class="about-item-title">Mission</h3>
+          <p class="about-item-text">
+            Democratizing access to humanoid robotics through an affordable, 
+            flexible sharing economy model.
+          </p>
+        </div>
+        
+        <div class="about-item">
+          <span class="about-number">02</span>
+          <h3 class="about-item-title">Technology</h3>
+          <p class="about-item-text">
+            Advanced AI-driven humanoids with natural language processing, 
+            adaptive learning, and seamless human interaction.
+          </p>
+        </div>
+        
+        <div class="about-item">
+          <span class="about-number">03</span>
+          <h3 class="about-item-title">Network</h3>
+          <p class="about-item-text">
+            A distributed fleet across major metropolitan areas with 
+            15-minute average response times.
+          </p>
+        </div>
+        
+        <div class="about-item">
+          <span class="about-number">04</span>
+          <h3 class="about-item-title">Vision</h3>
+          <p class="about-item-text">
+            Creating a future where humanoid assistance is as accessible 
+            and normalized as ride-sharing is today.
+          </p>
+        </div>
+      </div>
+      
+      <div class="stats-row">
+        <div class="stat-box">
+          <span class="stat-value">99.7%</span>
+          <span class="stat-desc">Uptime</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">15min</span>
+          <span class="stat-desc">Response</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">24/7</span>
+          <span class="stat-desc">Available</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">12</span>
+          <span class="stat-desc">Cities</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="services-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-label">02 — Services</span>
+        <h2 class="section-title">
+          One robot.<br>Infinite possibilities.
+        </h2>
+      </div>
+      
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Home Care</h3>
+          <p class="service-text">
+            Elderly assistance, childcare support, and household management 
+            with empathetic AI-driven interaction.
+          </p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Business Operations</h3>
+          <p class="service-text">
+            Reception, customer service, inventory management, and 
+            operational tasks for modern enterprises.
+          </p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Education & Tutoring</h3>
+          <p class="service-text">
+            Personalized tutoring, language practice, and interactive 
+            learning experiences for all ages.
+          </p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Technical Assistance</h3>
+          <p class="service-text">
+            Mechanical repairs, technical setup, equipment maintenance, 
+            and hands-on problem solving.
+          </p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Events & Hospitality</h3>
+          <p class="service-text">
+            Event support, guided experiences, and memorable 
+            interactions for special occasions.
+          </p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Temporary Staffing</h3>
+          <p class="service-text">
+            Fill workforce gaps with reliable assistance for retail, 
+            logistics, and service industries.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <h2 class="cta-title">Ready to meet Isaac?</h2>
+    <p class="cta-text">
+      Join the waitlist for early access to our sharing network.
+    </p>
+    <button class="cta-button" onclick="openPricing()">View Pricing</button>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-logo">Isaac</div>
+    <p class="footer-text">Sharing Humanoid — San Francisco, CA</p>
+    <p class="footer-copyright">© 2025 Isaac Robotics. All rights reserved.</p>
+  </footer>
+
+  <!-- Pricing Modal -->
+  <div class="modal-overlay" id="pricingModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closePricing()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      
+      <div class="modal-header">
+        <span class="modal-label">03 — Pricing</span>
+        <h2 class="modal-title">Choose your plan</h2>
+        <p class="modal-subtext">Flexible options for every need</p>
+      </div>
+      
+      <div class="pricing-tabs">
+        <button class="pricing-tab active" onclick="switchPlan('hourly')">Hourly</button>
+        <button class="pricing-tab" onclick="switchPlan('subscription')">Subscription</button>
+      </div>
+      
+      <!-- Hourly Pricing -->
+      <div class="pricing-content active" id="hourlyPricing">
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <span class="plan-name">Basic</span>
+            <div class="plan-price">
+              <span class="price-amount">$29</span>
+              <span class="price-period">/hour</span>
+            </div>
+            <ul class="plan-features">
+              <li>Standard assistance tasks</li>
+              <li>2-hour minimum</li>
+              <li>Basic support</li>
+            </ul>
+            <button class="cta-button cta-secondary" style="width: 100%">Book Now</button>
+          </div>
+          
+          <div class="pricing-card featured">
+            <span class="plan-badge">Popular</span>
+            <span class="plan-name">Professional</span>
+            <div class="plan-price">
+              <span class="price-amount">$49</span>
+              <span class="price-period">/hour</span>
+            </div>
+            <ul class="plan-features">
+              <li>Advanced task capabilities</li>
+              <li>1-hour minimum</li>
+              <li>Priority support</li>
+              <li>Custom configurations</li>
+            </ul>
+            <button class="cta-button" style="width: 100%">Book Now</button>
+          </div>
+          
+          <div class="pricing-card">
+            <span class="plan-name">Enterprise</span>
+            <div class="plan-price">
+              <span class="price-amount">$89</span>
+              <span class="price-period">/hour</span>
+            </div>
+            <ul class="plan-features">
+              <li>Full capability access</li>
+              <li>No minimum</li>
+              <li>24/7 dedicated support</li>
+              <li>Multi-robot coordination</li>
+            </ul>
+            <button class="cta-button cta-secondary" style="width: 100%">Contact Sales</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Subscription Pricing -->
+      <div class="pricing-content" id="subscriptionPricing">
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <span class="plan-name">Starter</span>
+            <div class="plan-price">
+              <span class="price-amount">$499</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li>20 hours included</li>
+              <li>Rollover unused hours</li>
+              <li>Email support</li>
+            </ul>
+            <button class="cta-button cta-secondary" style="width: 100%">Subscribe</button>
+          </div>
+          
+          <div class="pricing-card featured">
+            <span class="plan-badge">Best Value</span>
+            <span class="plan-name">Growth</span>
+            <div class="plan-price">
+              <span class="price-amount">$1,299</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li>60 hours included</li>
+              <li>Priority scheduling</li>
+              <li>Dedicated support</li>
+              <li>Analytics dashboard</li>
+            </ul>
+            <button class="cta-button" style="width: 100%">Subscribe</button>
+          </div>
+          
+          <div class="pricing-card">
+            <span class="plan-name">Unlimited</span>
+            <div class="plan-price">
+              <span class="price-amount">$3,999</span>
+              <span class="price-period">/month</span>
+            </div>
+            <ul class="plan-features">
+              <li>Unlimited hours</li>
+              <li>Guaranteed availability</li>
+              <li>White-glove service</li>
+              <li>Custom integrations</li>
+            </ul>
+            <button class="cta-button cta-secondary" style="width: 100%">Contact Sales</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Typing animation
+    const roles = [
+      'Caregiver', 
+      'Teacher', 
+      'Coach', 
+      'Mechanic', 
+      'Assistant', 
+      'Housekeeper', 
+      'Part-time Employee',
+      'Partner', 
+      'Guardian', 
+      'Helper', 
+      'Companion'
+    ];
+    
+    let currentRole = 0;
+    let currentChar = 0;
+    let isDeleting = false;
+    const dynamicText = document.getElementById('dynamicText');
+    
+    function type() {
+      const role = roles[currentRole];
+      
+      if (!isDeleting) {
+        dynamicText.textContent = role.substring(0, currentChar + 1);
+        currentChar++;
+        
+        if (currentChar === role.length) {
+          setTimeout(() => { isDeleting = true; type(); }, 2000);
+          return;
+        }
+      } else {
+        dynamicText.textContent = role.substring(0, currentChar - 1);
+        currentChar--;
+        
+        if (currentChar === 0) {
+          isDeleting = false;
+          currentRole = (currentRole + 1) % roles.length;
+        }
+      }
+      
+      setTimeout(type, isDeleting ? 50 : 120);
+    }
+    
+    type();
+    
+    // Modal functions
+    function openPricing() {
+      document.getElementById('pricingModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closePricing() {
+      document.getElementById('pricingModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    // Close modal on overlay click
+    document.getElementById('pricingModal').addEventListener('click', function(e) {
+      if (e.target === this) closePricing();
+    });
+    
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closePricing();
+    });
+    
+    // Pricing tabs
+    function switchPlan(plan) {
+      const tabs = document.querySelectorAll('.pricing-tab');
+      const contents = document.querySelectorAll('.pricing-content');
+      
+      tabs.forEach(tab => tab.classList.remove('active'));
+      contents.forEach(content => content.classList.remove('active'));
+      
+      if (plan === 'hourly') {
+        tabs[0].classList.add('active');
+        document.getElementById('hourlyPricing').classList.add('active');
+      } else {
+        tabs[1].classList.add('active');
+        document.getElementById('subscriptionPricing').classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
