@@ -2060,12 +2060,12 @@ body.modal-open {
 .custom-select-options,
 .date-picker-dropdown {
   scrollbar-width: thin;
-  scrollbar-color: rgba(225, 255, 75, 0.3) rgba(255, 255, 255, 0.05);
+  scrollbar-color: rgba(225, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
 }
 
 .custom-select-options::-webkit-scrollbar,
 .date-picker-dropdown::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .custom-select-options::-webkit-scrollbar-track,
