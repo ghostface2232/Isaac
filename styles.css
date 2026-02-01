@@ -41,6 +41,18 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Scroll offset for anchor links - accounts for fixed nav height */
+/* Mobile: 2-line nav (~100px), Desktop: 1-line nav (~70px) */
+#about, #services, #pricing {
+  scroll-margin-top: 100px;
+}
+
+@media (min-width: 768px) {
+  #about, #services, #pricing {
+    scroll-margin-top: 70px;
+  }
+}
+
 body {
   font-family: 'SFKR', 'Outfit', sans-serif;
   background: #050505;
