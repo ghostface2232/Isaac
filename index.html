@@ -261,8 +261,10 @@
           </div>
 
           <div class="pricing-card featured">
-            <span class="plan-badge">Popular</span>
-            <span class="plan-name">Professional</span>
+            <div class="plan-header">
+              <span class="plan-name">Professional</span>
+              <span class="plan-badge">Popular</span>
+            </div>
             <div class="plan-price">
               <span class="price-amount">$49</span>
               <span class="price-period">/hour</span>
@@ -311,8 +313,10 @@
           </div>
 
           <div class="pricing-card featured">
-            <span class="plan-badge">Best Value</span>
-            <span class="plan-name">Growth</span>
+            <div class="plan-header">
+              <span class="plan-name">Growth</span>
+              <span class="plan-badge">Best Value</span>
+            </div>
             <div class="plan-price">
               <span class="price-amount">$1,299</span>
               <span class="price-period">/month</span>
@@ -518,7 +522,27 @@
 
         <div class="booking-actions">
           <button class="cta-button cta-secondary" onclick="prevStep(2)">Back</button>
-          <button class="cta-button" id="confirmBtn" disabled>Complete Reservation</button>
+          <button class="cta-button" id="confirmBtn" onclick="showConfirmationModal()">Complete Reservation</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" id="confirmationModal">
+    <div class="modal confirmation-modal">
+      <div class="confirmation-content">
+        <div class="confirmation-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <h2 class="confirmation-title">Isaac is preparing for you</h2>
+        <p class="confirmation-message">Your reservation has been received. We'll be ready to assist you at your scheduled time.</p>
+        <div class="confirmation-actions">
+          <button class="cta-button cta-secondary" onclick="editReservation()">예약 수정</button>
+          <button class="cta-button" onclick="closeAllModals()">확인</button>
         </div>
       </div>
     </div>
@@ -920,6 +944,32 @@
       if (!e.target.closest('.custom-date-picker')) {
         document.querySelectorAll('.custom-date-picker').forEach(s => s.classList.remove('open'));
       }
+    });
+
+    // Confirmation Modal Functions
+    function showConfirmationModal() {
+      document.getElementById('confirmationModal').classList.add('active');
+    }
+
+    function closeConfirmationModal() {
+      document.getElementById('confirmationModal').classList.remove('active');
+    }
+
+    function closeAllModals() {
+      document.getElementById('confirmationModal').classList.remove('active');
+      document.getElementById('bookingModal').classList.remove('active');
+      document.body.style.overflow = '';
+      resetBookingForm();
+    }
+
+    function editReservation() {
+      document.getElementById('confirmationModal').classList.remove('active');
+      // Stay on booking modal step 3 for editing
+    }
+
+    // Close confirmation modal on overlay click
+    document.getElementById('confirmationModal').addEventListener('click', function(e) {
+      if (e.target === this) closeConfirmationModal();
     });
   </script>
 </body>
