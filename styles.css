@@ -308,6 +308,7 @@ body {
   color: var(--accent-color);
   display: inline-block;
   margin-bottom: 16px;
+  margin-left: -8px;
   padding: 8px 16px;
   background: rgba(225, 255, 75, 0.08);
   border: 1px solid rgba(225, 255, 75, 0.2);
@@ -317,6 +318,7 @@ body {
 @media (min-width: 768px) {
   .section-label {
     font-size: 14px;
+    margin-left: -10px;
     padding: 10px 20px;
   }
 }
