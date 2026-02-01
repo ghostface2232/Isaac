@@ -106,7 +106,7 @@ body {
 .logo-img {
   height: 24px;
   width: auto;
-  filter: invert(1) sepia(1) saturate(5) hue-rotate(20deg);
+  filter: brightness(0) saturate(100%) invert(95%) sepia(50%) saturate(1000%) hue-rotate(25deg) brightness(103%);
 }
 
 @media (min-width: 768px) {
@@ -172,7 +172,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 24px 60px;
+  padding: 100px 24px 40px;
   position: relative;
   width: 100%;
   max-width: 100%;
@@ -181,13 +181,13 @@ body {
 
 @media (min-width: 768px) {
   .hero {
-    padding: 120px 48px 80px;
+    padding: 120px 48px 48px;
   }
 }
 
 @media (min-width: 1200px) {
   .hero {
-    padding: 120px 80px 80px;
+    padding: 120px 80px 48px;
   }
 }
 
@@ -312,7 +312,7 @@ body {
 
 /* About Section */
 .about-section {
-  padding: 80px 24px;
+  padding: 48px 24px 80px;
   background: #050505;
   width: 100%;
   max-width: 100%;
@@ -321,19 +321,19 @@ body {
 
 @media (min-width: 768px) {
   .about-section {
-    padding: 120px 48px;
+    padding: 64px 48px 120px;
   }
 }
 
 @media (min-width: 1200px) {
   .about-section {
-    padding: 160px 80px;
+    padding: 80px 80px 160px;
   }
 }
 
 @media (min-width: 1400px) {
   .about-section {
-    padding: 160px calc((100% - 1400px) / 2 + 80px);
+    padding: 80px calc((100% - 1400px) / 2 + 80px) 160px;
   }
 }
 
@@ -943,11 +943,14 @@ html, body {
   }
   .nav-links {
     width: 100%;
-    justify-content: center;
-    gap: 12px;
+    justify-content: flex-start;
+    gap: 16px;
     margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-links .cta-button {
+    margin-left: auto;
   }
   .hero-cta {
     flex-direction: column;
@@ -1484,7 +1487,7 @@ img, video, iframe, embed, object {
 
 /* Hero Section Background with Robot Image */
 .hero {
-  background: linear-gradient(to bottom, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.85) 50%, #050505 100%),
+  background: linear-gradient(to bottom, transparent 0%, transparent 60%, #050505 100%),
               url('https://i.imgur.com/gKXtVU3.jpeg') center center / cover no-repeat;
 }
 
@@ -1500,9 +1503,10 @@ img, video, iframe, embed, object {
   right: 0;
   width: 45%;
   height: 100%;
-  background: linear-gradient(to left, rgba(5,5,5,0.3) 0%, rgba(5,5,5,1) 100%),
+  background: linear-gradient(to left, rgba(5,5,5,0.1) 0%, rgba(5,5,5,0.95) 100%),
+              linear-gradient(to bottom, transparent 0%, transparent 70%, #050505 100%),
               url('https://i.imgur.com/3iRYVhB.jpeg') center right / cover no-repeat;
-  opacity: 0.4;
+  opacity: 0.7;
   pointer-events: none;
   z-index: 0;
 }
@@ -1526,9 +1530,9 @@ img, video, iframe, embed, object {
   transform: translateX(-50%);
   width: 80%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(5,5,5,0.6) 0%, rgba(5,5,5,0.9) 100%),
+  background: linear-gradient(to bottom, rgba(5,5,5,0.2) 0%, rgba(5,5,5,0.5) 100%),
               url('https://i.imgur.com/HcNC77q.jpeg') center center / cover no-repeat;
-  opacity: 0.25;
+  opacity: 0.5;
   pointer-events: none;
   z-index: 0;
 }
@@ -1575,37 +1579,162 @@ img, video, iframe, embed, object {
 }
 
 /* Custom Date Picker Styling */
-.datetime-input[type="date"] {
-  cursor: pointer;
+.custom-date-picker {
   position: relative;
+  width: 100%;
 }
 
-.datetime-input[type="date"]::-webkit-calendar-picker-indicator {
+.custom-date-picker .custom-select-trigger {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  font-family: 'SFKR', sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.custom-date-picker .custom-select-trigger:hover {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+}
+
+.custom-date-picker.open .custom-select-trigger {
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+}
+
+.date-picker-dropdown {
   position: absolute;
-  top: 0;
+  top: calc(100% + 8px);
   left: 0;
   right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
+  background: #0f0f0f;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 16px;
+  z-index: 100;
   opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease;
+  min-width: 280px;
+}
+
+.custom-date-picker.open .date-picker-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.date-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 0 4px;
+}
+
+.date-picker-month {
+  font-family: 'SFKR', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.date-nav-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.2s ease;
+}
+
+.date-nav-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.date-picker-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.date-picker-weekdays span {
+  font-family: 'SFKR', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  padding: 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.date-picker-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.date-day {
+  font-family: 'SFKR', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.date-day:hover:not(.disabled):not(.empty) {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.date-day.empty {
+  cursor: default;
+}
+
+.date-day.disabled {
+  color: rgba(255,255,255,0.2);
+  cursor: not-allowed;
+}
+
+.date-day.today {
+  border: 1px solid rgba(225, 255, 75, 0.4);
+  color: var(--accent-color);
+}
+
+.date-day.selected {
+  background: var(--accent-color);
+  color: #000;
+  font-weight: 500;
+}
+
+.date-day.selected:hover {
+  background: var(--accent-color);
+  color: #000;
 }
 
 .date-select {
   position: relative;
-}
-
-.date-select::after {
-  content: '';
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-  width: 16px;
-  height: 16px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
-  background-size: contain;
-  pointer-events: none;
 }
 
 /* Step indicator accent */
