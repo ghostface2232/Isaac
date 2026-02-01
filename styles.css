@@ -2060,30 +2060,29 @@ body.modal-open {
 .custom-select-options,
 .date-picker-dropdown {
   scrollbar-width: thin;
-  scrollbar-color: rgba(225, 255, 75, 0.3) rgba(255, 255, 255, 0.05);
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
 
 .custom-select-options::-webkit-scrollbar,
 .date-picker-dropdown::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .custom-select-options::-webkit-scrollbar-track,
 .date-picker-dropdown::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.03);
-  border-radius: 3px;
+  background: transparent;
+  border-radius: 2px;
 }
 
 .custom-select-options::-webkit-scrollbar-thumb,
 .date-picker-dropdown::-webkit-scrollbar-thumb {
-  background: rgba(225, 255, 75, 0.25);
-  border-radius: 3px;
-  transition: background 0.2s ease;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
 }
 
 .custom-select-options::-webkit-scrollbar-thumb:hover,
 .date-picker-dropdown::-webkit-scrollbar-thumb:hover {
-  background: rgba(225, 255, 75, 0.4);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* Ensure dropdowns stay on top and scroll properly */
