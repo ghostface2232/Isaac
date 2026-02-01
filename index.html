@@ -420,10 +420,10 @@
             <input type="date" id="bookingDate" class="datetime-input">
           </div>
           <div class="time-select">
-            <label class="input-label">Start Time</label>
+            <label class="input-label">Time</label>
             <div class="custom-select" id="timeSelect">
               <div class="custom-select-trigger" onclick="toggleDropdown('timeSelect')">
-                <span class="custom-select-value" id="timeSelectValue">Select time</span>
+                <span class="custom-select-value" id="timeSelectValue">Time</span>
                 <svg class="custom-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
@@ -436,7 +436,7 @@
             <label class="input-label">Duration</label>
             <div class="custom-select" id="durationSelect">
               <div class="custom-select-trigger" onclick="toggleDropdown('durationSelect')">
-                <span class="custom-select-value" id="durationSelectValue">Select duration</span>
+                <span class="custom-select-value" id="durationSelectValue">Duration</span>
                 <svg class="custom-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
@@ -582,9 +582,9 @@
       document.getElementById('confirmBtn').disabled = true;
 
       // Reset custom selects
-      document.getElementById('timeSelectValue').textContent = 'Select time';
+      document.getElementById('timeSelectValue').textContent = 'Time';
       document.getElementById('timeSelectValue').classList.remove('selected');
-      document.getElementById('durationSelectValue').textContent = 'Select duration';
+      document.getElementById('durationSelectValue').textContent = 'Duration';
       document.getElementById('durationSelectValue').classList.remove('selected');
       document.querySelectorAll('.custom-select-option').forEach(opt => opt.classList.remove('selected'));
     }
