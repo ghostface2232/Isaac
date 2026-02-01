@@ -1923,16 +1923,41 @@ img, video, iframe, embed, object {
 }
 
 .confirmation-icon {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background: linear-gradient(135deg, rgba(225, 255, 75, 0.15) 0%, rgba(225, 255, 75, 0.05) 100%);
   border: 1px solid rgba(225, 255, 75, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   color: var(--accent-color);
+  position: relative;
+}
+
+.pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--accent-color);
+  animation: pulseRing 2s ease-out infinite;
+}
+
+.pulse-ring.delay {
+  animation-delay: 0.5s;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
 }
 
 .confirmation-title {
@@ -1948,10 +1973,29 @@ img, video, iframe, embed, object {
 .confirmation-message {
   font-family: 'SFKR', sans-serif;
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.7;
   color: rgba(255,255,255,0.5);
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   max-width: 320px;
+}
+
+.confirmation-details {
+  margin-bottom: 32px;
+}
+
+.confirmation-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(225, 255, 75, 0.1);
+  border: 1px solid rgba(225, 255, 75, 0.25);
+  border-radius: 100px;
+  color: var(--accent-color);
+  font-family: 'SFKR', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
 .confirmation-actions {
@@ -1970,6 +2014,11 @@ img, video, iframe, embed, object {
     padding: 32px 24px;
   }
 
+  .confirmation-icon {
+    width: 80px;
+    height: 80px;
+  }
+
   .confirmation-title {
     font-size: 24px;
   }
@@ -1981,4 +2030,65 @@ img, video, iframe, embed, object {
   .confirmation-actions .cta-button {
     width: 100%;
   }
+}
+
+/* Modal scroll lock - prevent background scroll */
+body.modal-open {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+/* Modal overlay with touch scroll prevention */
+.modal-overlay {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-overlay.active {
+  touch-action: none;
+}
+
+/* Allow scroll inside modal content */
+.modal {
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+}
+
+/* Custom scrollbar for dropdowns - unified style */
+.custom-select-options,
+.date-picker-dropdown {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(225, 255, 75, 0.3) rgba(255, 255, 255, 0.05);
+}
+
+.custom-select-options::-webkit-scrollbar,
+.date-picker-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-select-options::-webkit-scrollbar-track,
+.date-picker-dropdown::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.03);
+  border-radius: 3px;
+}
+
+.custom-select-options::-webkit-scrollbar-thumb,
+.date-picker-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(225, 255, 75, 0.25);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.custom-select-options::-webkit-scrollbar-thumb:hover,
+.date-picker-dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(225, 255, 75, 0.4);
+}
+
+/* Ensure dropdowns stay on top and scroll properly */
+.custom-select-options {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }

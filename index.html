@@ -539,16 +539,30 @@
     <div class="modal confirmation-modal">
       <div class="confirmation-content">
         <div class="confirmation-icon">
-          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 6v6l4 2"/>
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring delay"></div>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/>
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 9v-2M12 17v-2M15 12h2M7 12h2"/>
           </svg>
         </div>
         <h2 class="confirmation-title">Isaac is preparing for you</h2>
-        <p class="confirmation-message">Your reservation has been received. We'll be ready to assist you at your scheduled time.</p>
+        <p class="confirmation-message">
+          Your humanoid assistant is being configured for your needs.<br>
+          We'll reach out shortly to finalize the details.
+        </p>
+        <div class="confirmation-details">
+          <span class="confirmation-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Reservation Confirmed
+          </span>
+        </div>
         <div class="confirmation-actions">
-          <button class="cta-button cta-secondary" onclick="editReservation()">예약 수정</button>
-          <button class="cta-button" onclick="closeAllModals()">확인</button>
+          <button class="cta-button cta-secondary" onclick="editReservation()">Edit Reservation</button>
+          <button class="cta-button" onclick="closeAllModals()">Done</button>
         </div>
       </div>
     </div>
@@ -622,10 +636,14 @@
     // Booking Modal
     let selectedPurposes = [];
     let currentStep = 1;
+    let scrollPosition = 0;
 
     function openBooking() {
+      // Save scroll position before locking
+      scrollPosition = window.pageYOffset;
+      document.body.classList.add('modal-open');
+      document.body.style.top = `-${scrollPosition}px`;
       document.getElementById('bookingModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
       // Reset to step 1
       currentStep = 1;
       showStep(1);
@@ -634,7 +652,9 @@
 
     function closeBooking() {
       document.getElementById('bookingModal').classList.remove('active');
-      document.body.style.overflow = '';
+      document.body.classList.remove('modal-open');
+      document.body.style.top = '';
+      window.scrollTo(0, scrollPosition);
     }
 
     function resetBookingForm() {
@@ -644,8 +664,6 @@
       document.getElementById('bookingDate').value = '';
       document.getElementById('bookingTime').value = '';
       document.getElementById('bookingDuration').value = '';
-      document.getElementById('confirmBtn').disabled = true;
-
       // Reset custom selects
       document.getElementById('timeSelectValue').textContent = 'Time';
       document.getElementById('timeSelectValue').classList.remove('selected');
@@ -964,7 +982,9 @@
     function closeAllModals() {
       document.getElementById('confirmationModal').classList.remove('active');
       document.getElementById('bookingModal').classList.remove('active');
-      document.body.style.overflow = '';
+      document.body.classList.remove('modal-open');
+      document.body.style.top = '';
+      window.scrollTo(0, scrollPosition);
       resetBookingForm();
     }
 
@@ -976,6 +996,26 @@
     // Close confirmation modal on overlay click
     document.getElementById('confirmationModal').addEventListener('click', function(e) {
       if (e.target === this) closeConfirmationModal();
+    });
+
+    // Prevent background scroll on mobile when touching modal overlay
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('touchmove', function(e) {
+        const target = e.target;
+        const isScrollable = target.closest('.custom-select-options') ||
+                            target.closest('.modal');
+
+        if (!isScrollable) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+    });
+
+    // Allow scroll inside dropdowns
+    document.querySelectorAll('.custom-select-options').forEach(dropdown => {
+      dropdown.addEventListener('touchmove', function(e) {
+        e.stopPropagation();
+      }, { passive: true });
     });
   </script>
 </body>
