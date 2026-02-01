@@ -454,16 +454,16 @@ body {
 }
 
 .stat-box {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 16px;
   text-align: center;
   transition: all 0.3s ease;
 }
 
 .stat-box:hover {
-  border-color: rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
 }
 
 .stat-value {
@@ -554,15 +554,15 @@ body {
 }
 
 .service-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 20px;
 }
 
 .service-card:hover {
-  background: rgba(255,255,255,0.03);
-  border-color: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.18);
   transform: translateY(-6px);
   box-shadow: 0 30px 60px rgba(0,0,0,0.4);
 }
@@ -778,7 +778,8 @@ body {
   display: flex;
   gap: 8px;
   margin-bottom: 32px;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
   padding: 4px;
   width: fit-content;
   border-radius: 28px;
@@ -800,7 +801,7 @@ body {
 
 .pricing-tab.active {
   color: #fff;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.12);
 }
 
 .pricing-grid {
@@ -831,8 +832,8 @@ body {
 }
 
 .pricing-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
   transition: all 0.4s ease;
   border-radius: 20px;
   position: relative;
@@ -842,13 +843,13 @@ body {
 }
 
 .pricing-card:hover {
-  border-color: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.2);
   transform: translateY(-4px);
 }
 
 .pricing-card.featured {
-  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-  border-color: rgba(255,255,255,0.12);
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+  border-color: rgba(255,255,255,0.18);
 }
 
 .pricing-card .plan-features {
@@ -1413,8 +1414,8 @@ img, video, iframe, embed, object {
 
 /* Booking Summary */
 .booking-summary {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 24px;
@@ -1603,12 +1604,18 @@ img, video, iframe, embed, object {
   position: absolute;
   top: 0;
   right: 0;
-  width: 50%;
+  left: 0;
+  width: 100%;
   height: 100%;
-  background: linear-gradient(to left, rgba(5,5,5,0) 0%, rgba(5,5,5,0.85) 100%),
-              linear-gradient(to bottom, transparent 0%, transparent 75%, #050505 100%),
-              url('https://i.imgur.com/3iRYVhB.jpeg') center right / cover no-repeat;
-  opacity: 0.85;
+  background: linear-gradient(90deg,
+              rgba(5,5,5,0) 0%,
+              rgba(5,5,5,0) 35%,
+              rgba(5,5,5,0.35) 55%,
+              rgba(5,5,5,0.7) 75%,
+              rgba(5,5,5,0.85) 100%),
+              linear-gradient(to bottom, transparent 0%, transparent 70%, #050505 100%),
+              url('https://i.imgur.com/3iRYVhB.jpeg') right center / cover no-repeat;
+  opacity: 0.75;
   pointer-events: none;
   z-index: 0;
 }
