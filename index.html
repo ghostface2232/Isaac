@@ -13,7 +13,9 @@
 <body>
   <!-- Navigation -->
   <nav class="nav">
-    <div class="logo">Isaac</div>
+    <a href="#" class="logo">
+      <img src="logo/Isaac_Logo.svg" alt="Isaac" class="logo-img">
+    </a>
     <div class="nav-links">
       <a href="#about" class="nav-link">About</a>
       <a href="#services" class="nav-link">Services</a>
@@ -62,35 +64,43 @@
           <span class="about-number">01</span>
           <h3 class="about-item-title">Mission</h3>
           <p class="about-item-text">
-            Democratizing access to humanoid robotics through an affordable, 
-            flexible sharing economy model.
+            Democratizing access to humanoid robotics through an affordable,
+            flexible sharing economy model. We believe the future of robotics
+            shouldn't be limited to corporations—everyone deserves access to
+            transformative technology.
           </p>
         </div>
-        
+
         <div class="about-item">
           <span class="about-number">02</span>
           <h3 class="about-item-title">Technology</h3>
           <p class="about-item-text">
-            Advanced AI-driven humanoids with natural language processing, 
-            adaptive learning, and seamless human interaction.
+            Advanced AI-driven humanoids with natural language processing,
+            adaptive learning, and seamless human interaction. Our robots learn
+            from each deployment, continuously improving to meet diverse needs
+            with precision and empathy.
           </p>
         </div>
-        
+
         <div class="about-item">
           <span class="about-number">03</span>
           <h3 class="about-item-title">Network</h3>
           <p class="about-item-text">
-            A distributed fleet across major metropolitan areas with 
-            15-minute average response times.
+            A distributed fleet across major metropolitan areas with
+            15-minute average response times. Our intelligent dispatch system
+            ensures optimal robot allocation, minimizing wait times while
+            maximizing efficiency.
           </p>
         </div>
-        
+
         <div class="about-item">
           <span class="about-number">04</span>
           <h3 class="about-item-title">Vision</h3>
           <p class="about-item-text">
-            Creating a future where humanoid assistance is as accessible 
-            and normalized as ride-sharing is today.
+            Creating a future where humanoid assistance is as accessible
+            and normalized as ride-sharing is today. We envision a world where
+            robots and humans collaborate seamlessly, enhancing quality of life
+            for all.
           </p>
         </div>
       </div>
@@ -342,7 +352,9 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="footer-logo">Isaac</div>
+    <div class="footer-logo">
+      <img src="logo/Isaac_Logo.svg" alt="Isaac" class="footer-logo-img">
+    </div>
     <p class="footer-text">Sharing Humanoid — San Francisco, CA</p>
     <p class="footer-copyright">© 2025 Isaac Robotics. All rights reserved.</p>
   </footer>
@@ -409,18 +421,29 @@
           </div>
           <div class="time-select">
             <label class="input-label">Start Time</label>
-            <input type="time" id="bookingTime" class="datetime-input">
+            <div class="custom-select" id="timeSelect">
+              <div class="custom-select-trigger" onclick="toggleDropdown('timeSelect')">
+                <span class="custom-select-value" id="timeSelectValue">Select time</span>
+                <svg class="custom-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="custom-select-options" id="timeOptions"></div>
+            </div>
+            <input type="hidden" id="bookingTime" value="">
           </div>
           <div class="duration-select">
             <label class="input-label">Duration</label>
-            <select id="bookingDuration" class="datetime-input">
-              <option value="1">1 hour</option>
-              <option value="2" selected>2 hours</option>
-              <option value="3">3 hours</option>
-              <option value="4">4 hours</option>
-              <option value="6">6 hours</option>
-              <option value="8">8 hours</option>
-            </select>
+            <div class="custom-select" id="durationSelect">
+              <div class="custom-select-trigger" onclick="toggleDropdown('durationSelect')">
+                <span class="custom-select-value" id="durationSelectValue">Select duration</span>
+                <svg class="custom-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="custom-select-options" id="durationOptions"></div>
+            </div>
+            <input type="hidden" id="bookingDuration" value="">
           </div>
         </div>
 
@@ -532,7 +555,7 @@
     }
 
     // Booking Modal
-    let selectedPurpose = '';
+    let selectedPurposes = [];
     let currentStep = 1;
 
     function openBooking() {
@@ -550,28 +573,38 @@
     }
 
     function resetBookingForm() {
-      selectedPurpose = '';
+      selectedPurposes = [];
       document.querySelectorAll('.purpose-pill').forEach(p => p.classList.remove('active'));
       document.getElementById('customPurpose').value = '';
       document.getElementById('bookingDate').value = '';
       document.getElementById('bookingTime').value = '';
-      document.getElementById('bookingDuration').value = '2';
+      document.getElementById('bookingDuration').value = '';
       document.getElementById('confirmBtn').disabled = true;
+
+      // Reset custom selects
+      document.getElementById('timeSelectValue').textContent = 'Select time';
+      document.getElementById('timeSelectValue').classList.remove('selected');
+      document.getElementById('durationSelectValue').textContent = 'Select duration';
+      document.getElementById('durationSelectValue').classList.remove('selected');
+      document.querySelectorAll('.custom-select-option').forEach(opt => opt.classList.remove('selected'));
     }
 
     function selectPurpose(el) {
-      document.querySelectorAll('.purpose-pill').forEach(p => p.classList.remove('active'));
-      el.classList.add('active');
-      selectedPurpose = el.textContent;
-      document.getElementById('customPurpose').value = '';
+      el.classList.toggle('active');
+      const purpose = el.textContent;
+
+      if (el.classList.contains('active')) {
+        if (!selectedPurposes.includes(purpose)) {
+          selectedPurposes.push(purpose);
+        }
+      } else {
+        selectedPurposes = selectedPurposes.filter(p => p !== purpose);
+      }
     }
 
     // Listen for custom purpose input
     document.getElementById('customPurpose').addEventListener('input', function() {
-      if (this.value.trim()) {
-        document.querySelectorAll('.purpose-pill').forEach(p => p.classList.remove('active'));
-        selectedPurpose = this.value.trim();
-      }
+      // Custom input is additional, not replacing pill selections
     });
 
     function showStep(step) {
@@ -595,19 +628,19 @@
       if (step === 2) {
         // Validate step 1
         const customVal = document.getElementById('customPurpose').value.trim();
-        if (!selectedPurpose && !customVal) {
+        if (selectedPurposes.length === 0 && !customVal) {
           alert('Please select or enter a purpose');
           return;
         }
-        if (customVal) selectedPurpose = customVal;
       }
 
       if (step === 3) {
         // Validate step 2
         const date = document.getElementById('bookingDate').value;
         const time = document.getElementById('bookingTime').value;
-        if (!date || !time) {
-          alert('Please select both date and time');
+        const duration = document.getElementById('bookingDuration').value;
+        if (!date || !time || !duration) {
+          alert('Please select date, time, and duration');
           return;
         }
         // Update summary
@@ -624,7 +657,10 @@
     }
 
     function updateSummary() {
-      document.getElementById('summaryPurpose').textContent = selectedPurpose;
+      const customVal = document.getElementById('customPurpose').value.trim();
+      let allPurposes = [...selectedPurposes];
+      if (customVal) allPurposes.push(customVal);
+      document.getElementById('summaryPurpose').textContent = allPurposes.join(', ') || '-';
 
       const dateVal = document.getElementById('bookingDate').value;
       const dateObj = new Date(dateVal);
@@ -638,7 +674,8 @@
       document.getElementById('summaryTime').textContent = timeObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 
       const duration = document.getElementById('bookingDuration').value;
-      document.getElementById('summaryDuration').textContent = duration + (duration === '1' ? ' hour' : ' hours');
+      const durationNum = parseFloat(duration);
+      document.getElementById('summaryDuration').textContent = durationNum + (durationNum === 1 ? ' hour' : ' hours');
     }
 
     // Close modal on overlay click
@@ -655,6 +692,109 @@
     document.addEventListener('DOMContentLoaded', function() {
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('bookingDate').setAttribute('min', today);
+
+      // Generate time options (10-minute intervals)
+      generateTimeOptions();
+
+      // Generate duration options (30-minute intervals)
+      generateDurationOptions();
+    });
+
+    // Custom Select Functions
+    function generateTimeOptions() {
+      const timeOptions = document.getElementById('timeOptions');
+      timeOptions.innerHTML = '';
+
+      for (let h = 0; h < 24; h++) {
+        for (let m = 0; m < 60; m += 10) {
+          const hour24 = h.toString().padStart(2, '0');
+          const minute = m.toString().padStart(2, '0');
+          const value = `${hour24}:${minute}`;
+
+          const hour12 = h === 0 ? 12 : (h > 12 ? h - 12 : h);
+          const ampm = h < 12 ? 'AM' : 'PM';
+          const displayText = `${hour12}:${minute} ${ampm}`;
+
+          const option = document.createElement('div');
+          option.className = 'custom-select-option';
+          option.setAttribute('data-value', value);
+          option.textContent = displayText;
+          option.onclick = () => selectTime(value, displayText);
+          timeOptions.appendChild(option);
+        }
+      }
+    }
+
+    function generateDurationOptions() {
+      const durationOptions = document.getElementById('durationOptions');
+      durationOptions.innerHTML = '';
+
+      const durations = [
+        { value: '0.5', label: '30 minutes' },
+        { value: '1', label: '1 hour' },
+        { value: '1.5', label: '1.5 hours' },
+        { value: '2', label: '2 hours' },
+        { value: '2.5', label: '2.5 hours' },
+        { value: '3', label: '3 hours' },
+        { value: '3.5', label: '3.5 hours' },
+        { value: '4', label: '4 hours' },
+        { value: '5', label: '5 hours' },
+        { value: '6', label: '6 hours' },
+        { value: '8', label: '8 hours' }
+      ];
+
+      durations.forEach(d => {
+        const option = document.createElement('div');
+        option.className = 'custom-select-option';
+        option.setAttribute('data-value', d.value);
+        option.textContent = d.label;
+        option.onclick = () => selectDuration(d.value, d.label);
+        durationOptions.appendChild(option);
+      });
+    }
+
+    function toggleDropdown(selectId) {
+      const select = document.getElementById(selectId);
+      const wasOpen = select.classList.contains('open');
+
+      // Close all dropdowns first
+      document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('open'));
+
+      // Toggle the clicked one
+      if (!wasOpen) {
+        select.classList.add('open');
+      }
+    }
+
+    function selectTime(value, displayText) {
+      document.getElementById('bookingTime').value = value;
+      document.getElementById('timeSelectValue').textContent = displayText;
+      document.getElementById('timeSelectValue').classList.add('selected');
+      document.getElementById('timeSelect').classList.remove('open');
+
+      // Update selected state
+      document.querySelectorAll('#timeOptions .custom-select-option').forEach(opt => {
+        opt.classList.toggle('selected', opt.getAttribute('data-value') === value);
+      });
+    }
+
+    function selectDuration(value, displayText) {
+      document.getElementById('bookingDuration').value = value;
+      document.getElementById('durationSelectValue').textContent = displayText;
+      document.getElementById('durationSelectValue').classList.add('selected');
+      document.getElementById('durationSelect').classList.remove('open');
+
+      // Update selected state
+      document.querySelectorAll('#durationOptions .custom-select-option').forEach(opt => {
+        opt.classList.toggle('selected', opt.getAttribute('data-value') === value);
+      });
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.custom-select')) {
+        document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('open'));
+      }
     });
   </script>
 </body>
