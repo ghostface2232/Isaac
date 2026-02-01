@@ -470,7 +470,7 @@ body {
   font-family: 'Anton', sans-serif;
   font-weight: 400;
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   letter-spacing: -0.02em;
 }
 
@@ -490,8 +490,8 @@ body {
   line-height: 1.5;
   color: rgba(255,255,255,0.35);
   display: block;
-  margin-top: 12px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 16px;
 }
 
 @media (min-width: 640px) {
