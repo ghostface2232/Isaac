@@ -408,11 +408,13 @@ body {
 }
 
 .about-number {
-  font-size: 11px;
-  color: rgba(255,255,255,0.3);
+  font-size: 24px;
+  color: rgba(255,255,255,0.25);
   font-family: 'Space Mono', monospace;
   display: block;
   margin-bottom: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .about-item-title {
@@ -726,8 +728,8 @@ body {
 
 .modal-close {
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: 16px;
+  right: 16px;
   background: none;
   border: none;
   color: rgba(255,255,255,0.5);
@@ -735,6 +737,7 @@ body {
   padding: 8px;
   transition: color 0.3s ease;
   border-radius: 8px;
+  z-index: 10;
 }
 
 .modal-close:hover {
@@ -870,10 +873,14 @@ body {
   color: #000;
 }
 
+.plan-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
 .plan-badge {
-  position: absolute;
-  top: 16px;
-  right: 16px;
   font-size: 10px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -881,6 +888,7 @@ body {
   background: rgba(255,255,255,0.1);
   padding: 4px 10px;
   border-radius: 12px;
+  display: inline-block;
 }
 
 .plan-name {
@@ -890,6 +898,10 @@ body {
   color: rgba(255,255,255,0.6);
   display: block;
   margin-bottom: 16px;
+}
+
+.plan-header .plan-name {
+  margin-bottom: 0;
 }
 
 .plan-price {
@@ -1865,5 +1877,79 @@ img, video, iframe, embed, object {
   .datetime-input {
     padding: 12px 14px;
     font-size: 14px;
+  }
+}
+
+/* Confirmation Modal */
+.confirmation-modal {
+  max-width: 440px;
+  text-align: center;
+  padding: 48px 40px;
+}
+
+.confirmation-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.confirmation-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(225, 255, 75, 0.15) 0%, rgba(225, 255, 75, 0.05) 100%);
+  border: 1px solid rgba(225, 255, 75, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: var(--accent-color);
+}
+
+.confirmation-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.confirmation-message {
+  font-family: 'SFKR', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 32px;
+  max-width: 320px;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.confirmation-actions .cta-button {
+  min-width: 120px;
+}
+
+@media (max-width: 480px) {
+  .confirmation-modal {
+    padding: 32px 24px;
+  }
+
+  .confirmation-title {
+    font-size: 24px;
+  }
+
+  .confirmation-actions {
+    flex-direction: column;
+  }
+
+  .confirmation-actions .cta-button {
+    width: 100%;
   }
 }
