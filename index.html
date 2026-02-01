@@ -17,8 +17,8 @@
     <div class="nav-links">
       <a href="#about" class="nav-link">About</a>
       <a href="#services" class="nav-link">Services</a>
-      <button class="nav-link" onclick="openPricing()">Pricing</button>
-      <button class="cta-button" onclick="openPricing()">Get Started</button>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <button class="cta-button" onclick="openBooking()">Get Started</button>
     </div>
   </nav>
 
@@ -28,14 +28,14 @@
       <p class="hero-subtitle">Sharing Humanoid</p>
       <h1 class="hero-title">
         Isaac Can Be A<br>
-        <span class="dynamic-text" id="dynamicText"></span><span class="cursor">|</span>
+        <span class="dynamic-line"><span class="dynamic-text" id="dynamicText"></span><span class="cursor">|</span></span>
       </h1>
       <p class="hero-description">
         Humanoid robots are likely to become part of our lives<br>
         through a sharing-based service.
       </p>
       <div class="hero-cta">
-        <button class="cta-button" onclick="openPricing()">Reserve Your Isaac</button>
+        <button class="cta-button" onclick="openBooking()">Reserve Your Isaac</button>
       </div>
     </div>
   </section>
@@ -215,43 +215,20 @@
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="cta-section">
-    <h2 class="cta-title">Ready to meet Isaac?</h2>
-    <p class="cta-text">
-      Join the waitlist for early access to our sharing network.
-    </p>
-    <button class="cta-button" onclick="openPricing()">View Pricing</button>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-logo">Isaac</div>
-    <p class="footer-text">Sharing Humanoid — San Francisco, CA</p>
-    <p class="footer-copyright">© 2025 Isaac Robotics. All rights reserved.</p>
-  </footer>
-
-  <!-- Pricing Modal -->
-  <div class="modal-overlay" id="pricingModal">
-    <div class="modal">
-      <button class="modal-close" onclick="closePricing()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-      
-      <div class="modal-header">
-        <span class="modal-label">03 — Pricing</span>
-        <h2 class="modal-title">Choose your plan</h2>
-        <p class="modal-subtext">Flexible options for every need</p>
+  <!-- Pricing Section -->
+  <section id="pricing" class="pricing-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-label">03 — Pricing</span>
+        <h2 class="section-title">Choose your plan</h2>
+        <p class="pricing-subtext">Flexible options for every need</p>
       </div>
-      
+
       <div class="pricing-tabs">
         <button class="pricing-tab active" onclick="switchPlan('hourly')">Hourly</button>
         <button class="pricing-tab" onclick="switchPlan('subscription')">Subscription</button>
       </div>
-      
+
       <!-- Hourly Pricing -->
       <div class="pricing-content active" id="hourlyPricing">
         <div class="pricing-grid">
@@ -266,9 +243,9 @@
               <li>2-hour minimum</li>
               <li>Basic support</li>
             </ul>
-            <button class="cta-button cta-secondary" style="width: 100%">Book Now</button>
+            <button class="cta-button cta-secondary" style="width: 100%" onclick="openBooking()">Book Now</button>
           </div>
-          
+
           <div class="pricing-card featured">
             <span class="plan-badge">Popular</span>
             <span class="plan-name">Professional</span>
@@ -282,9 +259,9 @@
               <li>Priority support</li>
               <li>Custom configurations</li>
             </ul>
-            <button class="cta-button" style="width: 100%">Book Now</button>
+            <button class="cta-button" style="width: 100%" onclick="openBooking()">Book Now</button>
           </div>
-          
+
           <div class="pricing-card">
             <span class="plan-name">Enterprise</span>
             <div class="plan-price">
@@ -297,11 +274,11 @@
               <li>24/7 dedicated support</li>
               <li>Multi-robot coordination</li>
             </ul>
-            <button class="cta-button cta-secondary" style="width: 100%">Contact Sales</button>
+            <button class="cta-button cta-secondary" style="width: 100%" onclick="openBooking()">Contact Sales</button>
           </div>
         </div>
       </div>
-      
+
       <!-- Subscription Pricing -->
       <div class="pricing-content" id="subscriptionPricing">
         <div class="pricing-grid">
@@ -316,9 +293,9 @@
               <li>Rollover unused hours</li>
               <li>Email support</li>
             </ul>
-            <button class="cta-button cta-secondary" style="width: 100%">Subscribe</button>
+            <button class="cta-button cta-secondary" style="width: 100%" onclick="openBooking()">Subscribe</button>
           </div>
-          
+
           <div class="pricing-card featured">
             <span class="plan-badge">Best Value</span>
             <span class="plan-name">Growth</span>
@@ -332,9 +309,9 @@
               <li>Dedicated support</li>
               <li>Analytics dashboard</li>
             </ul>
-            <button class="cta-button" style="width: 100%">Subscribe</button>
+            <button class="cta-button" style="width: 100%" onclick="openBooking()">Subscribe</button>
           </div>
-          
+
           <div class="pricing-card">
             <span class="plan-name">Unlimited</span>
             <div class="plan-price">
@@ -347,8 +324,144 @@
               <li>White-glove service</li>
               <li>Custom integrations</li>
             </ul>
-            <button class="cta-button cta-secondary" style="width: 100%">Contact Sales</button>
+            <button class="cta-button cta-secondary" style="width: 100%" onclick="openBooking()">Contact Sales</button>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <h2 class="cta-title">Ready to meet Isaac?</h2>
+    <p class="cta-text">
+      Join the waitlist for early access to our sharing network.
+    </p>
+    <button class="cta-button" onclick="openBooking()">Reserve Your Isaac</button>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-logo">Isaac</div>
+    <p class="footer-text">Sharing Humanoid — San Francisco, CA</p>
+    <p class="footer-copyright">© 2025 Isaac Robotics. All rights reserved.</p>
+  </footer>
+
+  <!-- Booking Modal -->
+  <div class="modal-overlay" id="bookingModal">
+    <div class="modal booking-modal">
+      <button class="modal-close" onclick="closeBooking()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <!-- Step Indicator -->
+      <div class="booking-steps">
+        <div class="step-indicator active" data-step="1">1</div>
+        <div class="step-line"></div>
+        <div class="step-indicator" data-step="2">2</div>
+        <div class="step-line"></div>
+        <div class="step-indicator" data-step="3">3</div>
+      </div>
+
+      <!-- Step 1: Purpose Selection -->
+      <div class="booking-step active" id="bookingStep1">
+        <div class="modal-header">
+          <span class="modal-label">Step 1 of 3</span>
+          <h2 class="modal-title">What do you need Isaac for?</h2>
+          <p class="modal-subtext">Select a purpose or describe your own</p>
+        </div>
+
+        <div class="purpose-options">
+          <button class="purpose-pill" onclick="selectPurpose(this)">Home Care</button>
+          <button class="purpose-pill" onclick="selectPurpose(this)">Childcare</button>
+          <button class="purpose-pill" onclick="selectPurpose(this)">Elderly Care</button>
+          <button class="purpose-pill" onclick="selectPurpose(this)">Tutoring</button>
+          <button class="purpose-pill" onclick="selectPurpose(this)">Housekeeping</button>
+          <button class="purpose-pill" onclick="selectPurpose(this)">Event Support</button>
+          <button class="purpose-pill" onclick="selectPurpose(this)">Business Assistance</button>
+          <button class="purpose-pill" onclick="selectPurpose(this)">Technical Help</button>
+        </div>
+
+        <div class="custom-purpose">
+          <input type="text" id="customPurpose" class="custom-input" placeholder="Or describe your specific need...">
+        </div>
+
+        <div class="booking-actions">
+          <button class="cta-button" onclick="nextStep(2)">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Date & Time Selection -->
+      <div class="booking-step" id="bookingStep2">
+        <div class="modal-header">
+          <span class="modal-label">Step 2 of 3</span>
+          <h2 class="modal-title">When do you need Isaac?</h2>
+          <p class="modal-subtext">Select your preferred date and time</p>
+        </div>
+
+        <div class="datetime-picker">
+          <div class="date-select">
+            <label class="input-label">Date</label>
+            <input type="date" id="bookingDate" class="datetime-input">
+          </div>
+          <div class="time-select">
+            <label class="input-label">Start Time</label>
+            <input type="time" id="bookingTime" class="datetime-input">
+          </div>
+          <div class="duration-select">
+            <label class="input-label">Duration</label>
+            <select id="bookingDuration" class="datetime-input">
+              <option value="1">1 hour</option>
+              <option value="2" selected>2 hours</option>
+              <option value="3">3 hours</option>
+              <option value="4">4 hours</option>
+              <option value="6">6 hours</option>
+              <option value="8">8 hours</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="booking-actions">
+          <button class="cta-button cta-secondary" onclick="prevStep(1)">Back</button>
+          <button class="cta-button" onclick="nextStep(3)">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Confirmation -->
+      <div class="booking-step" id="bookingStep3">
+        <div class="modal-header">
+          <span class="modal-label">Step 3 of 3</span>
+          <h2 class="modal-title">Confirm your booking</h2>
+          <p class="modal-subtext">Review your reservation details</p>
+        </div>
+
+        <div class="booking-summary">
+          <div class="summary-item">
+            <span class="summary-label">Purpose</span>
+            <span class="summary-value" id="summaryPurpose">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Date</span>
+            <span class="summary-value" id="summaryDate">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Time</span>
+            <span class="summary-value" id="summaryTime">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Duration</span>
+            <span class="summary-value" id="summaryDuration">-</span>
+          </div>
+        </div>
+
+        <p class="confirmation-note">We'll contact you shortly to finalize your reservation.</p>
+
+        <div class="booking-actions">
+          <button class="cta-button cta-secondary" onclick="prevStep(2)">Back</button>
+          <button class="cta-button" id="confirmBtn" disabled>Complete Reservation</button>
         </div>
       </div>
     </div>
@@ -357,31 +470,31 @@
   <script>
     // Typing animation
     const roles = [
-      'Caregiver', 
-      'Teacher', 
-      'Coach', 
-      'Mechanic', 
-      'Assistant', 
-      'Housekeeper', 
+      'Caregiver',
+      'Teacher',
+      'Coach',
+      'Mechanic',
+      'Assistant',
+      'Housekeeper',
       'Part-time Employee',
-      'Partner', 
-      'Guardian', 
-      'Helper', 
+      'Partner',
+      'Guardian',
+      'Helper',
       'Companion'
     ];
-    
+
     let currentRole = 0;
     let currentChar = 0;
     let isDeleting = false;
     const dynamicText = document.getElementById('dynamicText');
-    
+
     function type() {
       const role = roles[currentRole];
-      
+
       if (!isDeleting) {
         dynamicText.textContent = role.substring(0, currentChar + 1);
         currentChar++;
-        
+
         if (currentChar === role.length) {
           setTimeout(() => { isDeleting = true; type(); }, 2000);
           return;
@@ -389,47 +502,26 @@
       } else {
         dynamicText.textContent = role.substring(0, currentChar - 1);
         currentChar--;
-        
+
         if (currentChar === 0) {
           isDeleting = false;
           currentRole = (currentRole + 1) % roles.length;
         }
       }
-      
+
       setTimeout(type, isDeleting ? 50 : 120);
     }
-    
+
     type();
-    
-    // Modal functions
-    function openPricing() {
-      document.getElementById('pricingModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    
-    function closePricing() {
-      document.getElementById('pricingModal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    
-    // Close modal on overlay click
-    document.getElementById('pricingModal').addEventListener('click', function(e) {
-      if (e.target === this) closePricing();
-    });
-    
-    // Close modal on Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closePricing();
-    });
-    
-    // Pricing tabs
+
+    // Pricing tabs (for section)
     function switchPlan(plan) {
       const tabs = document.querySelectorAll('.pricing-tab');
       const contents = document.querySelectorAll('.pricing-content');
-      
+
       tabs.forEach(tab => tab.classList.remove('active'));
       contents.forEach(content => content.classList.remove('active'));
-      
+
       if (plan === 'hourly') {
         tabs[0].classList.add('active');
         document.getElementById('hourlyPricing').classList.add('active');
@@ -438,6 +530,132 @@
         document.getElementById('subscriptionPricing').classList.add('active');
       }
     }
+
+    // Booking Modal
+    let selectedPurpose = '';
+    let currentStep = 1;
+
+    function openBooking() {
+      document.getElementById('bookingModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      // Reset to step 1
+      currentStep = 1;
+      showStep(1);
+      resetBookingForm();
+    }
+
+    function closeBooking() {
+      document.getElementById('bookingModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function resetBookingForm() {
+      selectedPurpose = '';
+      document.querySelectorAll('.purpose-pill').forEach(p => p.classList.remove('active'));
+      document.getElementById('customPurpose').value = '';
+      document.getElementById('bookingDate').value = '';
+      document.getElementById('bookingTime').value = '';
+      document.getElementById('bookingDuration').value = '2';
+      document.getElementById('confirmBtn').disabled = true;
+    }
+
+    function selectPurpose(el) {
+      document.querySelectorAll('.purpose-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      selectedPurpose = el.textContent;
+      document.getElementById('customPurpose').value = '';
+    }
+
+    // Listen for custom purpose input
+    document.getElementById('customPurpose').addEventListener('input', function() {
+      if (this.value.trim()) {
+        document.querySelectorAll('.purpose-pill').forEach(p => p.classList.remove('active'));
+        selectedPurpose = this.value.trim();
+      }
+    });
+
+    function showStep(step) {
+      document.querySelectorAll('.booking-step').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.step-indicator').forEach(i => i.classList.remove('active', 'completed'));
+
+      document.getElementById('bookingStep' + step).classList.add('active');
+
+      // Update step indicators
+      for (let i = 1; i <= 3; i++) {
+        const indicator = document.querySelector('.step-indicator[data-step="' + i + '"]');
+        if (i < step) {
+          indicator.classList.add('completed');
+        } else if (i === step) {
+          indicator.classList.add('active');
+        }
+      }
+    }
+
+    function nextStep(step) {
+      if (step === 2) {
+        // Validate step 1
+        const customVal = document.getElementById('customPurpose').value.trim();
+        if (!selectedPurpose && !customVal) {
+          alert('Please select or enter a purpose');
+          return;
+        }
+        if (customVal) selectedPurpose = customVal;
+      }
+
+      if (step === 3) {
+        // Validate step 2
+        const date = document.getElementById('bookingDate').value;
+        const time = document.getElementById('bookingTime').value;
+        if (!date || !time) {
+          alert('Please select both date and time');
+          return;
+        }
+        // Update summary
+        updateSummary();
+      }
+
+      currentStep = step;
+      showStep(step);
+    }
+
+    function prevStep(step) {
+      currentStep = step;
+      showStep(step);
+    }
+
+    function updateSummary() {
+      document.getElementById('summaryPurpose').textContent = selectedPurpose;
+
+      const dateVal = document.getElementById('bookingDate').value;
+      const dateObj = new Date(dateVal);
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('summaryDate').textContent = dateObj.toLocaleDateString('en-US', options);
+
+      const timeVal = document.getElementById('bookingTime').value;
+      const [hours, minutes] = timeVal.split(':');
+      const timeObj = new Date();
+      timeObj.setHours(parseInt(hours), parseInt(minutes));
+      document.getElementById('summaryTime').textContent = timeObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+      const duration = document.getElementById('bookingDuration').value;
+      document.getElementById('summaryDuration').textContent = duration + (duration === '1' ? ' hour' : ' hours');
+    }
+
+    // Close modal on overlay click
+    document.getElementById('bookingModal').addEventListener('click', function(e) {
+      if (e.target === this) closeBooking();
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeBooking();
+    });
+
+    // Set minimum date to today
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('bookingDate').setAttribute('min', today);
+    });
   </script>
 </body>
 </html>
