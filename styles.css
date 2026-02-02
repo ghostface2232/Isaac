@@ -645,6 +645,24 @@ body {
   line-height: 1.1;
 }
 
+@media (min-width: 1024px) {
+  .cta-title {
+    font-size: 64px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .cta-title {
+    font-size: 80px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .cta-title {
+    font-size: 96px;
+  }
+}
+
 .cta-text {
   font-family: 'SFKR', sans-serif;
   font-size: 17px;
@@ -1035,11 +1053,11 @@ body {
 
 @media (min-width: 1024px) {
   .hero-title {
-    font-size: 68px;
+    font-size: 84px;
     letter-spacing: -2px;
   }
   .section-title {
-    font-size: 48px;
+    font-size: 60px;
   }
 }
 
@@ -1048,13 +1066,22 @@ body {
     gap: 40px;
   }
   .hero-title {
-    font-size: 76px;
+    font-size: 100px;
   }
   .hero-description {
     font-size: 19px;
   }
   .section-title {
-    font-size: 52px;
+    font-size: 72px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .hero-title {
+    font-size: 120px;
+  }
+  .section-title {
+    font-size: 84px;
   }
 }
 
