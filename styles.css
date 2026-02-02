@@ -647,12 +647,6 @@ body {
 
 @media (min-width: 1024px) {
   .cta-title {
-    font-size: 64px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .cta-title {
     font-size: 80px;
   }
 }
@@ -1053,11 +1047,11 @@ body {
 
 @media (min-width: 1024px) {
   .hero-title {
-    font-size: 84px;
+    font-size: 100px;
     letter-spacing: -2px;
   }
   .section-title {
-    font-size: 60px;
+    font-size: 72px;
   }
 }
 
@@ -1065,14 +1059,8 @@ body {
   .nav-links {
     gap: 40px;
   }
-  .hero-title {
-    font-size: 100px;
-  }
   .hero-description {
     font-size: 19px;
-  }
-  .section-title {
-    font-size: 72px;
   }
 }
 
