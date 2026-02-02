@@ -44,12 +44,12 @@ html {
 /* Scroll offset for anchor links - accounts for fixed nav height */
 /* Mobile: 2-line nav (~100px), Desktop: 1-line nav (~70px) */
 #about, #services, #pricing {
-  scroll-margin-top: 50px;
+  scroll-margin-top: 48px;
 }
 
 @media (min-width: 768px) {
   #about, #services, #pricing {
-    scroll-margin-top: 30px;
+    scroll-margin-top: 16px;
   }
 }
 
